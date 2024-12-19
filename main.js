@@ -11,26 +11,44 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 
-// Ajout d'un cube et d'un helper
+// Ajout d'un cube
 const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0x2e6a2d });
-const cube = new THREE.Mesh(geometry, material);
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('rayane.jpg');
+const cubeMaterial = new THREE.MeshBasicMaterial({ map: texture });
+const cube = new THREE.Mesh(geometry, cubeMaterial);
+cube.position.set(-2, 0, 0); // Positionnement du cube à gauche
 scene.add(cube);
 
-// Ajout d'une lumière et d'un helper
+// Création d'une pyramide avec UV ajustées
+const pyramidGeometry = new THREE.ConeGeometry(1, 2, 3); // Base de 3 segments (triangle)
+const texturePyramid = textureLoader.load('rayane.jpg');
+texturePyramid.wrapS = THREE.RepeatWrapping;
+texturePyramid.wrapT = THREE.RepeatWrapping;
+texturePyramid.repeat.set(2, 2); // Répéter la texture pour un meilleur rendu
+
+const pyramidMaterial = new THREE.MeshBasicMaterial({ map: texturePyramid });
+const pyramid = new THREE.Mesh(pyramidGeometry, pyramidMaterial);
+pyramid.position.set(2, 0, 0); // Positionnement de la pyramide à droite
+scene.add(pyramid);
+
+// Création d'une sphère avec texture équirectangulaire
+const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+const textureSphere = textureLoader.load('rayane.jpg');
+textureSphere.wrapS = THREE.RepeatWrapping;
+textureSphere.wrapT = THREE.ClampToEdgeWrapping; // Pour éviter les étirements
+textureSphere.repeat.set(1, 1);
+
+const sphereMaterial = new THREE.MeshBasicMaterial({ map: textureSphere });
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(0, 0, 0); // Positionnement de la sphère au centre
+scene.add(sphere);
+// Ajout d'une lumière
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(0, 0, 1);
 scene.add(light);
 
-// Ajout d'une texture pour le cube
-const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load('crate.jpg');
-cube.material = new THREE.MeshBasicMaterial({ map: texture });
-
-//const axesHelper = new THREE.AxesHelper();
-//scene.add(axesHelper);
-
-// Contrôles pour orbiter (optionnel)
+// Contrôles pour orbiter
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
@@ -80,9 +98,14 @@ document.addEventListener('keyup', (event) => {
 
 // Fonction animate avec mise à jour de la caméra
 function animate() {
-
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
+
+    pyramid.rotation.x += 0.01;
+    pyramid.rotation.y += 0.01;
+
+    sphere.rotation.x += 0.01;
+    sphere.rotation.y += 0.01;
 
     if (keys.forward) {
         camera.position.z -= cameraSpeed;
