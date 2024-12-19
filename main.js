@@ -14,7 +14,7 @@ document.body.appendChild(renderer.domElement);
 // Ajout d'un cube
 const geometry = new THREE.BoxGeometry();
 const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load('rayane.jpg');
+const texture = textureLoader.load('image.png');
 const cubeMaterial = new THREE.MeshBasicMaterial({ map: texture });
 const cube = new THREE.Mesh(geometry, cubeMaterial);
 cube.position.set(-2, 0, 0); // Positionnement du cube à gauche
@@ -22,10 +22,10 @@ scene.add(cube);
 
 // Création d'une pyramide avec UV ajustées
 const pyramidGeometry = new THREE.ConeGeometry(1, 2, 3); // Base de 3 segments (triangle)
-const texturePyramid = textureLoader.load('rayane.jpg');
+const texturePyramid = textureLoader.load('image.png');
 texturePyramid.wrapS = THREE.RepeatWrapping;
 texturePyramid.wrapT = THREE.RepeatWrapping;
-texturePyramid.repeat.set(2, 2); // Répéter la texture pour un meilleur rendu
+texturePyramid.repeat.set(1, 1); // Répéter la texture pour un meilleur rendu
 
 const pyramidMaterial = new THREE.MeshBasicMaterial({ map: texturePyramid });
 const pyramid = new THREE.Mesh(pyramidGeometry, pyramidMaterial);
@@ -34,10 +34,10 @@ scene.add(pyramid);
 
 // Création d'une sphère avec texture équirectangulaire
 const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-const textureSphere = textureLoader.load('rayane.jpg');
+const textureSphere = textureLoader.load('image.png');
 textureSphere.wrapS = THREE.RepeatWrapping;
 textureSphere.wrapT = THREE.ClampToEdgeWrapping; // Pour éviter les étirements
-textureSphere.repeat.set(1, 1);
+textureSphere.repeat.set(1.7, 1.5);
 
 const sphereMaterial = new THREE.MeshBasicMaterial({ map: textureSphere });
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -47,6 +47,7 @@ scene.add(sphere);
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(0, 0, 1);
 scene.add(light);
+
 
 // Contrôles pour orbiter
 const controls = new OrbitControls(camera, renderer.domElement);
