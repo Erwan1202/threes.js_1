@@ -17,6 +17,16 @@ const material = new THREE.MeshBasicMaterial({ color: 0x2e6a2d });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
+// Ajout d'une lumière et d'un helper
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(0, 0, 1);
+scene.add(light);
+
+// Ajout d'une texture pour le cube
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('textures/crate.jpg');
+cube.material = new THREE.MeshBasicMaterial({ map: texture });
+
 const axesHelper = new THREE.AxesHelper();
 scene.add(axesHelper);
 
