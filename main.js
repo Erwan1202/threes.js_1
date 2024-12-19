@@ -24,11 +24,11 @@ scene.add(light);
 
 // Ajout d'une texture pour le cube
 const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load('textures/crate.jpg');
+const texture = textureLoader.load('crate.jpg');
 cube.material = new THREE.MeshBasicMaterial({ map: texture });
 
-const axesHelper = new THREE.AxesHelper();
-scene.add(axesHelper);
+//const axesHelper = new THREE.AxesHelper();
+//scene.add(axesHelper);
 
 // Contrôles pour orbiter (optionnel)
 const controls = new OrbitControls(camera, renderer.domElement);
